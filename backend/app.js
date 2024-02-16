@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const auth = require("./routes/auth")
+const list = require("./routes/list")
 app.use(express.json());//after doing this we can send data from backend to frontend
 require("./Connection/connection")
 
@@ -14,6 +15,8 @@ app.get("/",(req,res)=>{
 
 
 app.use("/api/v1",auth)
+
+app.use("/api/v2",list)
 const port = 8001
 app.listen(port, ()=>{
     console.log(`Server is listening to ${port}`)
