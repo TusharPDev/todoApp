@@ -41,4 +41,17 @@ router.put("/updateTask/:id", async (req, res) => {
     }
   });
 
+
+  router.delete("/deleteTask/:id", async (req,res)=>{
+    try {
+      const { email } = req.body;
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+       await List.findByIdAndDelete(req.params.id).then(()=>res.status(200).json({message: "Task Deleted"}))
+      } 
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
+  })
 module.exports = router;
+
