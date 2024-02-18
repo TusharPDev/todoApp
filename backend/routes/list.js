@@ -59,12 +59,15 @@ router.put("/updateTask/:id", async (req, res) => {
 
   router.get("/getTasks/:id", async (req,res)=>{
     try {
-      const list = await List.find({user:req.params.id})
+      const list = await List.find({user:req.params.id}).sort({createdAt: -1})//here we are sorting in reverse direction i.e last becomes first.
       res.status(200).json({list}) 
     } catch (error) {
       res.status(404).json({ error: "User not found" });
     }
   })
+
+
+  //
 
 module.exports = router;
 

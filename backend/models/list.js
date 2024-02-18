@@ -16,7 +16,8 @@
         ref: "User",
         },
     ],
-    });
+    },
+    { timestamps: true });
 
     module.exports = mongoose.model("List", listSchema); //Here the "List" acts a as a reference in user model ,
     // so the names should be same.
