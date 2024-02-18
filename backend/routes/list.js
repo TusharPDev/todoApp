@@ -54,5 +54,17 @@ router.put("/updateTask/:id", async (req, res) => {
     }
   })
 
+
+  //getTasks
+
+  router.get("/getTasks/:id", async (req,res)=>{
+    try {
+      const list = await List.find({user:req.params.id})
+      res.status(200).json({list}) 
+    } catch (error) {
+      res.status(404).json({ error: "User not found" });
+    }
+  })
+
 module.exports = router;
 
