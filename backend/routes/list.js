@@ -60,7 +60,12 @@ router.put("/updateTask/:id", async (req, res) => {
   router.get("/getTasks/:id", async (req,res)=>{
     try {
       const list = await List.find({user:req.params.id}).sort({createdAt: -1})//here we are sorting in reverse direction i.e last becomes first.
-      res.status(200).json({list}) 
+      
+      if(list.length != 0 ){
+        res.status(200).json({list})
+      }else{
+        res.status(200).json({message:"No Task"})
+      }
     } catch (error) {
       res.status(404).json({ error: "User not found" });
     }
