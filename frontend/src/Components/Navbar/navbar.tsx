@@ -19,7 +19,7 @@ import { Grid } from "@mui/material";
 import { useAtom } from 'jotai';
 import './navbar.css'
 import { themeToggleAtom } from "../../jotai-store/atoms/navbarAtom";
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["Home", "About Us", "Todo"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar =()=> {

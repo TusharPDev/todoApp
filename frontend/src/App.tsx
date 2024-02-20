@@ -5,6 +5,7 @@ import Navbar from './Components/Navbar/navbar';
 import { useAtom } from 'jotai';
 import { themeToggleAtom } from './jotai-store/atoms/navbarAtom';
 import Home from './Components/Home/home';
+import Footer from './Components/footer/footer';
 
 function App() {
   const [theme,setTheme] = useAtom(themeToggleAtom)
@@ -14,6 +15,7 @@ function App() {
      <div className='main'>
       <Home/>
      </div>
+     <Footer/>
     </div>
   );
 }
