@@ -8,23 +8,23 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AppIcon from "../../assets/images/robot.png";
 import SportsMartialArtsIcon from "@mui/icons-material/SportsMartialArts";
 import { Grid } from "@mui/material";
-import { useAtom } from 'jotai';
-import './navbar.css'
+import { useAtom } from "jotai";
+import "./navbar.css";
 import { themeToggleAtom } from "../../jotai-store/atoms/navbarAtom";
 const pages = ["Home", "About Us", "Todo"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const Navbar =()=> {
-const [theme,setTheme] = useAtom(themeToggleAtom)
-const [mode,setMode] = React.useState(false)
+const Navbar = () => {
+  const [theme, setTheme] = useAtom(themeToggleAtom);
+  const [mode, setMode] = React.useState(false);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -48,16 +48,20 @@ const [mode,setMode] = React.useState(false)
     setAnchorElUser(null);
   };
   const handleToggleTheme = () => {
-    setMode(!mode)
-    setTheme({...theme,isDark:!mode});
+    setMode(!mode);
+    setTheme({ ...theme, isDark: !mode });
   };
-  console.log(theme.isDark)
+  console.log(theme.isDark);
   return (
-    <AppBar position="static" sx={{backgroundColor:"#535C91"}}>
+    <AppBar position="static" sx={{ backgroundColor: "#535C91" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Grid sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}>
-            <img style={{width:"20px",height:"20px"}} src={AppIcon} alt="" />
+            <img
+              style={{ width: "20px", height: "20px" }}
+              src={AppIcon}
+              alt=""
+            />
           </Grid>
           <Typography
             variant="h6"
@@ -106,7 +110,7 @@ const [mode,setMode] = React.useState(false)
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
+              {pages.map((page, i) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
@@ -114,7 +118,11 @@ const [mode,setMode] = React.useState(false)
             </Menu>
           </Box>
           <Grid sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}>
-          <img style={{width:"20px",height:"20px"}} src={AppIcon} alt="" />
+            <img
+              style={{ width: "20px", height: "20px" }}
+              src={AppIcon}
+              alt=""
+            />
           </Grid>
           <Typography
             variant="h5"
@@ -145,10 +153,11 @@ const [mode,setMode] = React.useState(false)
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0, mt:1,mr:3 }}>
-            {
-              !mode? <LightModeIcon onClick ={handleToggleTheme}/> : <DarkModeIcon onClick={handleToggleTheme} sx={{color:"black"}}/>
-            }
+          <Box sx={{ flexGrow: 0, mt: 1, mr: 3 }}>
+            <Button sx={{color:"white",backgroundColor:"#20165840!important",borderRadius:"10px!important"}}>SignIn</Button>
+          </Box>
+          <Box sx={{ flexGrow: 0, mt: 1, mr: 3 }}>
+            <Button sx={{color:"white",backgroundColor:"#20165840!important",borderRadius:"10px!important"}}>SignUp</Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -183,5 +192,5 @@ const [mode,setMode] = React.useState(false)
       </Container>
     </AppBar>
   );
-}
+};
 export default Navbar;
