@@ -19,12 +19,16 @@ import { Grid } from "@mui/material";
 import { useAtom } from "jotai";
 import "./navbar.css";
 import { themeToggleAtom } from "../../jotai-store/atoms/navbarAtom";
+import useLocalStorage from "use-local-storage";
+import { userAuthAtom } from "../../jotai-store/atoms/authAtom";
 const pages = ["Home", "About Us", "Todo"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settingsAuth = ["Profile", "Account", "Dashboard", "Logout"];
+const settingsNoAuth = ["Features", "Contact us"];
 
 const Navbar = () => {
   const [theme, setTheme] = useAtom(themeToggleAtom);
-  const [mode, setMode] = React.useState(false);
+  const [isAuth, setIsAuth] = useAtom(userAuthAtom);
+  const [mode, setMode] = useLocalStorage("mode", false);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -154,10 +158,36 @@ const Navbar = () => {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0, mt: 1, mr: 3 }}>
-            <Button sx={{color:"white",backgroundColor:"#20165840!important",borderRadius:"10px!important"}}>SignIn</Button>
+            <Button
+              sx={{
+                color: "white",
+                backgroundColor: "#20165840!important",
+                borderRadius: "10px!important",
+              }}
+            >
+              SignIn
+            </Button>
           </Box>
           <Box sx={{ flexGrow: 0, mt: 1, mr: 3 }}>
-            <Button sx={{color:"white",backgroundColor:"#20165840!important",borderRadius:"10px!important"}}>SignUp</Button>
+            <Button
+              sx={{
+                color: "white",
+                backgroundColor: "#20165840!important",
+                borderRadius: "10px!important",
+              }}
+            >
+              SignUp
+            </Button>
+          </Box>
+          <Box sx={{ flexGrow: 0, mt: 1, mr: 3, cursor: "pointer" }}>
+            {!mode ? (
+              <LightModeIcon onClick={handleToggleTheme} />
+            ) : (
+              <DarkModeIcon
+                onClick={handleToggleTheme}
+                sx={{ color: "black" }}
+              />
+            )}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
@@ -181,11 +211,17 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {isAuth
+                ? settingsAuth.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))
+                : settingsNoAuth.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
             </Menu>
           </Box>
         </Toolbar>
