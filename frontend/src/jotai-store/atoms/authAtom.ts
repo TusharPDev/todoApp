@@ -27,4 +27,4 @@ type CreateUserAtom = {
   };
   
   // Create the atom
-  export const userAuthAtom = atom(CreateUserState);
+  export const userAuthAtom = atom(UserAuthState);

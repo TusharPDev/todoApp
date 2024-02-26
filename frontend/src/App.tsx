@@ -12,19 +12,14 @@ function App() {
   const [theme, setTheme] = useAtom(themeToggleAtom);
   const[mode,setMode]=useLocalStorage("mode",false)
   
-  const handleToggleTheme = () => {
-    setMode(!mode);
-    setTheme({ ...theme, isDark: !mode });
-  };
+
   return (
     <div
-      onClick={handleToggleTheme}
-      style={{ backgroundColor: theme.isDark ? "#272829" : "#D8D9DA" }}
+      style={{transition: "all 0.5s ease-out", backgroundColor: !theme.isDark ? "#272829" : "#D8D9DA" }}
       className="App"
     >
       <Navbar />
       <Home />
-      <Footer />
     </div>
   );
 }
