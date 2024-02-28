@@ -24,8 +24,8 @@ type CreateUserAtom = {
   
   // Define the initial state of your atom
   const UserAuthState: UserAuthAtom = {
-    isAuthenticated: true,
-    isRegistered: true
+    isAuthenticated: false,
+    isRegistered: false
   };
   
   // Create the atom

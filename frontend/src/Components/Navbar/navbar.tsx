@@ -22,13 +22,13 @@ import "./navbar.css";
 import { themeToggleAtom } from "../../jotai-store/atoms/navbarAtom";
 import useLocalStorage from "use-local-storage";
 import { userAuthAtom } from "../../jotai-store/atoms/authAtom";
-const pages: { label: string; path: string }[] = [
-  { label: "Home", path: "/" },
-  { label: "About Us", path: "/aboutus" },
-  { label: "Todo", path: "/todo" },
+const pages: { label: string; path: string; authRequired: boolean }[] = [
+  { label: "Home", path: "/", authRequired: false },
+  { label: "About Us", path: "/aboutus", authRequired: false },
+  { label: "Todo", path: "/todo", authRequired: true },
 ];
 const settingsAuth = ["Profile", "Account", "Dashboard", "Logout"];
-const settingsNoAuth = ["Features", "Contact us"];
+const settingsNoAuth = ["Signup", "Signin", "Features", "Contact us"];
 
 const Navbar = () => {
   const [theme, setTheme] = useAtom(themeToggleAtom);
@@ -52,10 +52,10 @@ const Navbar = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-  
-  const handleButtonClick = (path:string) => {
+
+  const handleButtonClick = (path: string) => {
     navigate(path);
-    console.log(path)
+    console.log(path);
     handleCloseNavMenu(); // Close the menu after navigation
   };
 
@@ -66,10 +66,16 @@ const Navbar = () => {
     setMode(!mode);
   };
 
+  const handleSignup = () => {
+    navigate("/signup");
+  };
+  const handleSignin = () => {
+    navigate("/signin");
+  };
   React.useEffect(() => {
     setTheme({ ...theme, isDark: !mode });
   }, [mode]);
-  console.log(theme.isDark);
+
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "#535C91" }}>
       <Container maxWidth="xl">
@@ -85,7 +91,7 @@ const Navbar = () => {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -146,7 +152,7 @@ const Navbar = () => {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -161,38 +167,58 @@ const Navbar = () => {
             MR.TASKYIE
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.label}
-                onClick={() => handleButtonClick(page.path)}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page.label}
-              </Button>
-            ))}
+            {pages.map((page) =>
+              !page.authRequired && !isAuth.isAuthenticated ? (
+                <Button
+                  key={page.label}
+                  onClick={() => handleButtonClick(page.path)}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.label}
+                </Button>
+              ) : isAuth.isAuthenticated ? (
+                <Button
+                  key={page.label}
+                  onClick={() => handleButtonClick(page.path)}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.label}
+                </Button>
+              ) : null
+            )}
           </Box>
-          <Box sx={{ flexGrow: 0, mt: 1, mr: 3 }}>
-            <Button
-              sx={{
-                color: "white",
-                backgroundColor: "#20165840!important",
-                borderRadius: "10px!important",
-              }}
-            >
-              SignIn
-            </Button>
-          </Box>
-          <Box sx={{ flexGrow: 0, mt: 1, mr: 3 }}>
-            <Button
-              sx={{
-                color: "white",
-                backgroundColor: "#20165840!important",
-                borderRadius: "10px!important",
-              }}
-            >
-              SignUp
-            </Button>
-          </Box>
+          {!isAuth.isAuthenticated ? (
+            <>
+              <Grid sx={{ display: { xs: "none", md: "flex" } }}>
+                <Box sx={{ flexGrow: 0, mt: 1, mr: 3 }}>
+                  <Button
+                    onClick={handleSignin}
+                    sx={{
+                      color: "white",
+                      backgroundColor: "#20165840!important",
+                      borderRadius: "10px!important",
+                    }}
+                  >
+                    SignIn
+                  </Button>
+                </Box>
+                <Box sx={{ flexGrow: 0, mt: 1, mr: 3 }}>
+                  <Button
+                    onClick={handleSignup}
+                    sx={{
+                      color: "white",
+                      backgroundColor: "#20165840!important",
+                      borderRadius: "10px!important",
+                    }}
+                  >
+                    SignUp
+                  </Button>
+                </Box>
+              </Grid>
+            </>
+          ) : (
+            <></>
+          )}
           <Box sx={{ flexGrow: 0, mt: 1, mr: 3, cursor: "pointer" }}>
             {!mode ? (
               <LightModeOutlinedIcon
