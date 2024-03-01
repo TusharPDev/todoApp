@@ -19,6 +19,7 @@ import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import "./navbar.css";
+import { MouseEvent } from "react";
 import { themeToggleAtom } from "../../jotai-store/atoms/navbarAtom";
 import useLocalStorage from "use-local-storage";
 import { userAuthAtom } from "../../jotai-store/atoms/authAtom";
@@ -59,22 +60,40 @@ const Navbar = () => {
     handleCloseNavMenu(); // Close the menu after navigation
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-  const handleToggleTheme = () => {
-    setMode(!mode);
-  };
+  // Define types for the functions' parameters
+type handleCloseUserMenuType = () => void;
+type handleToggleThemeType = () => void;
+type handleSignupType = () => void;
+type handleSigninType = () => void;
 
-  const handleSignup = () => {
-    navigate("/signup");
-  };
-  const handleSignin = () => {
-    navigate("/signin");
-  };
-  React.useEffect(() => {
-    setTheme({ ...theme, isDark: !mode });
-  }, [mode]);
+// Define the function types for React useEffect
+type useEffectType = (effect: React.EffectCallback, dependencies?: React.DependencyList) => void;
+
+const handleCloseUserMenu: handleCloseUserMenuType = () => {
+  setAnchorElUser(null);
+};
+
+const handleToggleTheme: handleToggleThemeType = () => {
+  setMode(!mode);
+};
+
+const handleSignup: handleSignupType = () => {
+  navigate("/signup");
+};
+
+const handleSignin: handleSigninType = () => {
+  navigate("/signin");
+};
+
+const useEffect: useEffectType = (effect, dependencies) => {
+  React.useEffect(effect, dependencies);
+  // Alternatively, you can directly use React.useEffect without redefining it:
+  // React.useEffect(effect, dependencies);
+};
+
+useEffect(() => {
+  setTheme({ ...theme, isDark: !mode });
+}, [mode]);
 
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "#535C91" }}>
