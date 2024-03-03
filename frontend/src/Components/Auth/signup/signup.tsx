@@ -16,7 +16,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import FormInputText from "../../Shared/form-components/FormTextInput/FormText";
+import { makeStyles } from "@mui/styles";
 function Copyright(props: any) {
   return (
     <Typography
@@ -35,10 +36,29 @@ function Copyright(props: any) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
+const useStyles = makeStyles((theme) => ({
+  cssLabel: {
+    color : '#fff!important',
+    fontWeight:'400!important',
+    fontSize:"12px",
+    marginTop:"-5px"
+  }, 
+  cssLabelLight: {
+    color : '#3D3B40!important',
+    fontWeight:'400!important',
+    fontSize:"12px",
+    marginTop:"-5px"
+  }, 
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor:"#7469B6!important"
+  },
+}));
 const SignUp = () => {
+  const classes = useStyles();
+
   const [theme, setTheme] = useAtom(themeToggleAtom);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -51,130 +71,157 @@ const SignUp = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       {/* <Container component="main" sx={{width:850}}> */}
-        <CssBaseline />
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container justifyContent="center">
-            <Grid item xs={11} sm={6} md={4} lg={3}>
-              <Paper
-                sx={{
-                  backgroundColor: theme.isDark ? "#27282940" : "#B4B4B860",
-                  height: "520px",
-                }}
-                variant="elevation"
-              >
-                <Stack>
-                  <Grid
-                    className="flicker-in-1"
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: 2,
-                    }}
-                  >
-                    <img
-                      style={{ width: "90px", height: "90px" }}
-                      src={AppIcon}
-                      alt=""
-                    />
-                  </Grid>
+      <CssBaseline />
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container justifyContent="center">
+          <Grid item xs={11} sm={6} md={4} lg={3}>
+            <Paper
+              sx={{
+                backgroundColor: theme.isDark ? "#27282940" : "#B4B4B860",
+                height: "520px",
+              }}
+              variant="elevation"
+            >
+              <Stack>
+                <Grid
+                  className="flicker-in-1"
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    mt: 2,
+                  }}
+                >
+                  <img
+                    style={{ width: "90px", height: "90px" }}
+                    src={AppIcon}
+                    alt=""
+                  />
+                </Grid>
+                <Box
+                  sx={{
+                    marginTop: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Avatar sx={{mt:0.5, bgcolor: "secondary.main" }}>
+                    <LockOutlinedIcon />
+                  </Avatar>
+                  <Typography sx={{color:theme.isDark ? "#3D3B40" : "#C7C8CC",fontFamily:"monospace"}} component="h1" variant="h5">
+                    Sign up
+                  </Typography>
                   <Box
-                    sx={{
-                      marginTop: 8,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
+                    component="form"
+                    noValidate
+                    onSubmit={handleSubmit}
+                    sx={{ mt: 3 }}
                   >
-                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                      <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                      Sign up
-                    </Typography>
-                    <Box
-                      component="form"
-                      noValidate
-                      onSubmit={handleSubmit}
-                      sx={{ mt: 3 }}
-                    >
-                      <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            autoComplete="given-name"
-                            name="firstName"
-                            required
-                            fullWidth
-                            id="firstName"
-                            label="First Name"
-                            autoFocus
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            required
-                            fullWidth
-                            id="lastName"
-                            label="Last Name"
-                            name="lastName"
-                            autoComplete="family-name"
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="new-password"
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                value="allowExtraEmails"
-                                color="primary"
-                              />
-                            }
-                            label="I want to receive inspiration, marketing promotions and updates via email."
-                          />
-                        </Grid>
+                    <Grid className="form-group" container spacing={2} sx={{px:2}}>
+                      <Grid item xs={12}>
+                        <FormInputText
+                          className="userName"
+                          autoComplete="given-name"
+                          name="userName"
+                          required
+                          InputLabelProps={{
+                            classes: {
+                              root: !theme.isDark ? classes.cssLabel : classes.cssLabelLight,
+                              focused: !theme.isDark ? classes.cssLabel : classes.cssLabelLight,
+                            },
+                        }}
+                        InputProps={{
+                            classes: {
+                              root: classes.notchedOutline,
+                              focused: classes.notchedOutline,
+                              notchedOutline: classes.notchedOutline,
+                            },
+                            
+                         }}
+                          fullWidth
+                          id="userName"
+                          label="Username"
+                          autoFocus
+                        />
                       </Grid>
+                      <Grid item xs={12}>
+                        <FormInputText
+                          required
+                          InputLabelProps={{
+                            classes: {
+                              root: !theme.isDark ? classes.cssLabel : classes.cssLabelLight,
+                              focused: !theme.isDark ? classes.cssLabel : classes.cssLabelLight,
+                            },
+                        }}
+                        InputProps={{
+                            classes: {
+                              root: classes.notchedOutline,
+                              focused: classes.notchedOutline,
+                              notchedOutline: classes.notchedOutline,
+                            },
+                            
+                         }}
+                          fullWidth
+                          id="email"
+                          label="Email Address"
+                          name="email"
+                          autoComplete="email"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormInputText
+                          required
+                          InputLabelProps={{
+                            classes: {
+                              root: !theme.isDark ? classes.cssLabel : classes.cssLabelLight,
+                              focused: !theme.isDark ? classes.cssLabel : classes.cssLabelLight,
+                            },
+                        }}
+                        InputProps={{
+                            classes: {
+                              root: classes.notchedOutline,
+                              focused: classes.notchedOutline,
+                              notchedOutline: classes.notchedOutline,
+                            },
+                            
+                         }}
+                          fullWidth
+                          name="password"
+                          label="Password"
+                          type="password"
+                          id="password"
+                          autoComplete="new-password"
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid sx={{ display: "flex", justifyContent: "center" }}>
                       <Button
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
+                        sx={{ mt: 3, mb: 2, width: 150,backgroundColor:"#7469B6","&:hover":{
+                          backgroundColor:"#7469B680!important"
+                        } }}
                       >
                         Sign Up
                       </Button>
-                      <Grid container justifyContent="flex-end">
-                        <Grid item>
-                          <Link href="#" variant="body2">
-                            Already have an account? Sign in
-                          </Link>
-                        </Grid>
+                    </Grid>
+
+                    <Grid container justifyContent="flex-end">
+                      <Grid item>
+                        <Link sx={{color:theme.isDark ? "#3D3B40": "#C7C8CC",textDecoration:"none",mr:1}} href="/signin" variant="body2">
+                          Already have an account? Sign in
+                        </Link>
                       </Grid>
-                    </Box>
+                    </Grid>
                   </Box>
-                </Stack>
-              </Paper>
-            </Grid>
+                </Box>
+              </Stack>
+            </Paper>
           </Grid>
-        </Box>
+        </Grid>
+      </Box>
       {/* </Container> */}
     </ThemeProvider>
   );
