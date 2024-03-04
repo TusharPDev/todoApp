@@ -2,6 +2,7 @@ import { Box, Grid, Paper, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { themeToggleAtom } from "../../../jotai-store/atoms/navbarAtom";
 import { useAtom } from "jotai";
+import axios from 'axios';
 import "./signup.css";
 import AppIcon from "../../../assets/images/robot.png";
 import * as React from "react";
@@ -60,13 +61,23 @@ const SignUp = () => {
   const classes = useStyles();
 
   const [theme, setTheme] = useAtom(themeToggleAtom);
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
+    const userName = data.get("userName")
+    const email = data.get("email")
+    const passWord = data.get("password")
+
+    const response = await axios.post('/api/v1/register', {
+      userName,
+      email,
+      passWord
+    });
+    console.log('User signed up:', response.data.user);
   };
   return (
     <ThemeProvider theme={defaultTheme}>
