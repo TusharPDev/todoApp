@@ -28,8 +28,20 @@ const pages: { label: string; path: string; authRequired: boolean }[] = [
   { label: "About Us", path: "/aboutus", authRequired: false },
   { label: "Todo", path: "/todo", authRequired: true },
 ];
-const settingsAuth = ["Profile", "Account", "Dashboard", "Logout"];
-const settingsNoAuth = ["Signup", "Signin", "Features", "Contact us"];
+// const settingsAuth = ["Profile", "Account", "Dashboard", "Logout"];
+const settingsAuth: { label: string; path: string;}[] = [
+  { label: "Profile", path: "/profile" },
+  { label: "Account", path: "/account" },
+  { label: "Dashboard", path: "/" },
+  { label: "Logout", path: "/" },
+];
+// const settingsNoAuth = ["Signup", "Signin", "Features", "Contact us"];
+const settingsNoAuth: { label: string; path: string;}[] = [
+  { label: "Signup", path: "/signup" },
+  { label: "Signin", path: "/signin" },
+  { label: "Features", path: "/features" },
+  { label: "Contact us", path: "/contactus" },
+];
 
 const Navbar = () => {
   const [theme, setTheme] = useAtom(themeToggleAtom);
@@ -69,7 +81,9 @@ type handleSigninType = () => void;
 // Define the function types for React useEffect
 type useEffectType = (effect: React.EffectCallback, dependencies?: React.DependencyList) => void;
 
-const handleCloseUserMenu: handleCloseUserMenuType = () => {
+const handleCloseUserMenu  = (path:string) => {
+  navigate(path);
+  console.log(path);
   setAnchorElUser(null);
 };
 
@@ -278,13 +292,13 @@ useEffect(() => {
             >
               {isAuth.isAuthenticated
                 ? settingsAuth.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
+                    <MenuItem key={setting.label} onClick={()=>handleCloseUserMenu(setting.path)}>
+                      <Typography textAlign="center">{setting.label}</Typography>
                     </MenuItem>
                   ))
                 : settingsNoAuth.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
+                  <MenuItem key={setting.label} onClick={()=>handleCloseUserMenu(setting.path)}>
+                  <Typography textAlign="center">{setting.label}</Typography>
                     </MenuItem>
                   ))}
             </Menu>

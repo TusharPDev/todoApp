@@ -1,8 +1,18 @@
 import React from "react";
 import "./home.css";
-import { Grid, Paper } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  Paper,
+  Typography,
+} from "@mui/material";
 import Navbar from "../Navbar/navbar";
 import { useAtom } from "jotai";
+import listImg from "../../assets/images/checklist.png";
 import useLocalStorage from "use-local-storage";
 import { themeToggleAtom } from "../../jotai-store/atoms/navbarAtom";
 import { userAuthAtom } from "../../jotai-store/atoms/authAtom";
@@ -19,7 +29,7 @@ const Home = () => {
       <div
         style={{
           transition: "all 0.5s ease-out",
-          backgroundColor: mode ? "#272829" : "#D8D9DA",
+          backgroundColor: mode ? "#2D3250" : "#D8D9DA",
         }}
         className="App"
       >
@@ -28,32 +38,17 @@ const Home = () => {
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
-              marginTop: "122px",
+              justifyContent: "space-around",
+              marginTop: "90px",
             }}
           >
-            <div>
-              <h1 style={{textAlign:"center",marginBottom:"40px"}}>Welcome to MR.TASKYIE</h1>
-              <p>Here are some amazing facts and features about our app:</p>
-              <ul>
-                <li>
-                  Feature 1: Organize your tasks in a simple and intuitive
-                  interface.
-                </li>
-                <li>Feature 2: Collaborate with your team in real-time.</li>
-                <li>
-                  Feature 3: Set reminders and due dates to stay on track.
-                </li>
-                <li>
-                  Feature 4: Customize your workspace to fit your workflow.
-                </li>
-                <li>
-                  Feature 5: Access your tasks from anywhere with our mobile
-                  app.
-                </li>
-              </ul>
-              <p style={{marginTop:"250px",textAlign:"center"}}>Sign up now to experience the power of MR.TASKYIE!</p>
-            </div>
+            <Card className="workspace"></Card>
+            <Grid sx={{display:"flex",justifyContent:"space-around",flexDirection:"column"}}>
+              <Card className="workspace2"></Card>
+              <Card className="workspace2-2"></Card>
+            </Grid>
+
+            <Card className="workspace3"></Card>
           </div>
         ) : (
           <>

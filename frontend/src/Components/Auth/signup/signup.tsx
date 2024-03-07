@@ -8,8 +8,8 @@ import AppIcon from "../../../assets/images/robot.png";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -23,6 +23,18 @@ import FormInputText from "../../Shared/form-components/FormTextInput/FormText";
 import { makeStyles } from "@mui/styles";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import AvatarProfile from "./Avatar";
+import avatar1 from "../../../assets/images/profile/gamer.png";
+import avatar2 from "../../../assets/images/profile/girl.png";
+import avatar3 from "../../../assets/images/profile/man (1).png";
+import avatar4 from "../../../assets/images/profile/man (2).png";
+import avatar5 from "../../../assets/images/profile/man (3).png";
+import avatar6 from "../../../assets/images/profile/man (4).png";
+import avatar7 from "../../../assets/images/profile/man (5).png";
+import avatar8 from "../../../assets/images/profile/man.png";
+import avatar9 from "../../../assets/images/profile/woman.png";
+import avatar10 from "../../../assets/images/profile/woman (1).png";
+import avatar11 from "../../../assets/images/profile/woman (2).png";
 function Copyright(props: any) {
   return (
     <Typography
@@ -65,8 +77,21 @@ const SignUp = () => {
   const classes = useStyles();
 
   const [theme, setTheme] = useAtom(themeToggleAtom);
-  const [isVisible,setIsvisible] = React.useState(false)
+  const [isVisible, setIsvisible] = React.useState(false);
   const navigate = useNavigate();
+
+  const AvatarCollection = [
+    avatar1,
+    avatar2,
+    avatar3,
+    avatar4,
+    avatar5,
+    avatar6,
+    avatar7,
+    avatar8,
+    avatar9,
+    avatar10,
+  ];
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -88,11 +113,11 @@ const SignUp = () => {
           icon: "info",
           title: "Empty Fields",
           text: "cannot proceed",
-          width:400,
-          heightAuto:false,
-          background: theme.isDark ? "#D8D9DA" : "#272829"
+          width: 400,
+          heightAuto: false,
+          background: theme.isDark ? "#D8D9DA" : "#272829",
         });
-      }else{
+      } else {
         const response = await axios.post(
           "http://localhost:8001/api/v1/register",
           {
@@ -109,13 +134,13 @@ const SignUp = () => {
             title: "Rgistered",
             text: "You have been registered successfully",
             background: theme.isDark ? "#D8D9DA" : "#272829",
-          }).then((resIfSucsess)=>{
-            if(resIfSucsess.isConfirmed){
-              navigate("/signin")
-            }else{
-              console.log("error")
+          }).then((resIfSucsess) => {
+            if (resIfSucsess.isConfirmed) {
+              navigate("/signin");
+            } else {
+              console.log("error");
             }
-          })
+          });
         } else {
           Swal.fire({
             icon: "error",
@@ -128,16 +153,16 @@ const SignUp = () => {
       console.error(error);
     }
   };
-  const handlePassVisibility = () =>{
-    setIsvisible(!isVisible)
-  }
+  const handlePassVisibility = () => {
+    setIsvisible(!isVisible);
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
       {/* <Container component="main" sx={{width:850}}> */}
       <CssBaseline />
       <Box sx={{ flexGrow: 1 }}>
         <Grid container justifyContent="center">
-          <Grid item xs={11} sm={6} md={4} lg={3}>
+          <Grid item xs={11} sm={6} md={4} lg={6}>
             <Paper
               sx={{
                 backgroundColor: theme.isDark ? "#27282940" : "#B4B4B860",
@@ -145,184 +170,227 @@ const SignUp = () => {
               }}
               variant="elevation"
             >
-              <Stack>
-                <Grid
-                  className="flicker-in-1"
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    mt: 2,
-                  }}
-                >
-                  <img
-                    style={{ width: "90px", height: "90px" }}
-                    src={AppIcon}
-                    alt=""
-                  />
-                </Grid>
-                <Box
-                  sx={{
-                    marginTop: 0,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Avatar sx={{ mt: 0.5, bgcolor: "secondary.main" }}>
-                    <LockOutlinedIcon />
-                  </Avatar>
-                  <Typography
+              <Grid
+                className="signUp-main"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Grid item>
+                  <Grid
+                    className="flicker-in-1"
                     sx={{
-                      color: theme.isDark ? "#3D3B40" : "#C7C8CC",
-                      fontFamily: "monospace",
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      mt: 2,
                     }}
-                    component="h1"
-                    variant="h5"
                   >
-                    Sign up
-                  </Typography>
+                    <img
+                      style={{ width: "90px", height: "90px" }}
+                      src={AppIcon}
+                      alt=""
+                    />
+                  </Grid>
                   <Box
-                    component="form"
-                    noValidate
-                    onSubmit={handleSubmit}
-                    sx={{ mt: 3 }}
+                    sx={{
+                      marginTop: 0,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
                   >
-                    <Grid
-                      className="form-group"
-                      container
-                      spacing={2}
-                      sx={{ px: 2 }}
+                    <Avatar sx={{ mt: 0.5, bgcolor: "secondary.main" }}>
+                      <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography
+                      sx={{
+                        color: theme.isDark ? "#3D3B40" : "#C7C8CC",
+                        fontFamily: "monospace",
+                      }}
+                      component="h1"
+                      variant="h5"
                     >
-                      <Grid item xs={12}>
-                        <FormInputText
-                          className="userName"
-                          autoComplete="given-name"
-                          name="userName"
-                          required
-                          InputLabelProps={{
-                            classes: {
-                              root: !theme.isDark
-                                ? classes.cssLabel
-                                : classes.cssLabelLight,
-                              focused: !theme.isDark
-                                ? classes.cssLabel
-                                : classes.cssLabelLight,
-                            },
-                          }}
-                          InputProps={{
-                            classes: {
-                              root: classes.notchedOutline,
-                              focused: classes.notchedOutline,
-                              notchedOutline: classes.notchedOutline,
-                            },
-                          }}
-                          fullWidth
-                          id="userName"
-                          label="Username"
-                          autoFocus
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <FormInputText
-                          required
-                          InputLabelProps={{
-                            classes: {
-                              root: !theme.isDark
-                                ? classes.cssLabel
-                                : classes.cssLabelLight,
-                              focused: !theme.isDark
-                                ? classes.cssLabel
-                                : classes.cssLabelLight,
-                            },
-                          }}
-                          InputProps={{
-                            classes: {
-                              root: classes.notchedOutline,
-                              focused: classes.notchedOutline,
-                              notchedOutline: classes.notchedOutline,
-                            },
-                          }}
-                          fullWidth
-                          id="email"
-                          label="Email Address"
-                          name="email"
-                          autoComplete="email"
-                        />
-                      </Grid>
-                      <Grid item xs={12} sx={{position:"relative"}}>
-                        <FormInputText
-                          required
-                          InputLabelProps={{
-                            classes: {
-                              root: !theme.isDark
-                                ? classes.cssLabel
-                                : classes.cssLabelLight,
-                              focused: !theme.isDark
-                                ? classes.cssLabel
-                                : classes.cssLabelLight,
-                            },
-                          }}
-                          InputProps={{
-                            classes: {
-                              root: classes.notchedOutline,
-                              focused: classes.notchedOutline,
-                              notchedOutline: classes.notchedOutline,
-                            },
-                          }}
-                          fullWidth
-                          name="password"
-                          label="Password"
-                          type= {isVisible ? "text" : "password"}
-                          id="password"
-                          autoComplete="new-password"
-                        />
-                        <Box sx={{position:"absolute",top:26,right:10}}>
-                          {
-                            isVisible ? <RemoveRedEyeIcon sx={{fontSize:"19px",color:"#65B741",cursor:"pointer"}} onClick={handlePassVisibility}/> : <VisibilityOffIcon sx={{fontSize:"19px",color:"#EE4266",cursor:"pointer"}} onClick={handlePassVisibility}/>
-                          }
-                        
-                        </Box>
-                      
-                      </Grid>
-                    </Grid>
-                    <Grid sx={{ display: "flex", justifyContent: "center" }}>
-                      <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{
-                          mt: 3,
-                          mb: 2,
-                          width: 150,
-                          backgroundColor: "#7469B6",
-                          "&:hover": {
-                            backgroundColor: "#7469B680!important",
-                          },
-                        }}
+                      Sign up
+                    </Typography>
+                    <Box
+                      component="form"
+                      noValidate
+                      onSubmit={handleSubmit}
+                      sx={{ mt: 3 }}
+                    >
+                      <Grid
+                        className="form-group"
+                        container
+                        spacing={2}
+                        sx={{ px: 2 }}
                       >
-                        Sign Up
-                      </Button>
-                    </Grid>
-
-                    <Grid container justifyContent="flex-end">
-                      <Grid item>
-                        <Link
-                          sx={{
-                            color: theme.isDark ? "#3D3B40" : "#C7C8CC",
-                            textDecoration: "none",
-                            mr: 1,
-                          }}
-                          href="/signin"
-                          variant="body2"
-                        >
-                          Already have an account? Sign in
-                        </Link>
+                        <Grid item xs={12}>
+                          <FormInputText
+                            className="userName"
+                            autoComplete="given-name"
+                            name="userName"
+                            required
+                            InputLabelProps={{
+                              classes: {
+                                root: !theme.isDark
+                                  ? classes.cssLabel
+                                  : classes.cssLabelLight,
+                                focused: !theme.isDark
+                                  ? classes.cssLabel
+                                  : classes.cssLabelLight,
+                              },
+                            }}
+                            InputProps={{
+                              classes: {
+                                root: classes.notchedOutline,
+                                focused: classes.notchedOutline,
+                                notchedOutline: classes.notchedOutline,
+                              },
+                            }}
+                            fullWidth
+                            id="userName"
+                            label="Username"
+                            autoFocus
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <FormInputText
+                            required
+                            InputLabelProps={{
+                              classes: {
+                                root: !theme.isDark
+                                  ? classes.cssLabel
+                                  : classes.cssLabelLight,
+                                focused: !theme.isDark
+                                  ? classes.cssLabel
+                                  : classes.cssLabelLight,
+                              },
+                            }}
+                            InputProps={{
+                              classes: {
+                                root: classes.notchedOutline,
+                                focused: classes.notchedOutline,
+                                notchedOutline: classes.notchedOutline,
+                              },
+                            }}
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                          />
+                        </Grid>
+                        <Grid item xs={12} sx={{ position: "relative" }}>
+                          <FormInputText
+                            required
+                            InputLabelProps={{
+                              classes: {
+                                root: !theme.isDark
+                                  ? classes.cssLabel
+                                  : classes.cssLabelLight,
+                                focused: !theme.isDark
+                                  ? classes.cssLabel
+                                  : classes.cssLabelLight,
+                              },
+                            }}
+                            InputProps={{
+                              classes: {
+                                root: classes.notchedOutline,
+                                focused: classes.notchedOutline,
+                                notchedOutline: classes.notchedOutline,
+                              },
+                            }}
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type={isVisible ? "text" : "password"}
+                            id="password"
+                            autoComplete="new-password"
+                          />
+                          <Box
+                            sx={{ position: "absolute", top: 26, right: 10 }}
+                          >
+                            {isVisible ? (
+                              <RemoveRedEyeIcon
+                                sx={{
+                                  fontSize: "19px",
+                                  color: "#65B741",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handlePassVisibility}
+                              />
+                            ) : (
+                              <VisibilityOffIcon
+                                sx={{
+                                  fontSize: "19px",
+                                  color: "#EE4266",
+                                  cursor: "pointer",
+                                }}
+                                onClick={handlePassVisibility}
+                              />
+                            )}
+                          </Box>
+                        </Grid>
                       </Grid>
+                      <Grid sx={{ display: "flex", justifyContent: "center" }}>
+                        <Button
+                          type="submit"
+                          fullWidth
+                          variant="contained"
+                          sx={{
+                            mt: 3,
+                            mb: 2,
+                            width: 150,
+                            backgroundColor: "#7469B6",
+                            "&:hover": {
+                              backgroundColor: "#7469B680!important",
+                            },
+                          }}
+                        >
+                          Sign Up
+                        </Button>
+                      </Grid>
+
+                      <Grid container justifyContent="flex-end">
+                        <Grid item>
+                          <Link
+                            sx={{
+                              color: theme.isDark ? "#3D3B40" : "#C7C8CC",
+                              textDecoration: "none",
+                              mr: 1,
+                            }}
+                            href="/signin"
+                            variant="body2"
+                          >
+                            Already have an account? Sign in
+                          </Link>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Box>
+                </Grid>
+                <div
+                  style={{
+                    height: "500px",
+                    width: "1px",
+                    backgroundColor: "grey",
+                    marginTop: "10px",
+                  }}
+                ></div>
+                <Grid item sx={{ width: "700px" }}>
+                  <Box className="profole-box">
+                    <Grid>
+                      <h4 style={{ textAlign: "center", marginBottom: "10px" }}>
+                        Select Your Avatar
+                      </h4>
+                      <AvatarProfile images={AvatarCollection} />
                     </Grid>
                   </Box>
-                </Box>
-              </Stack>
+                </Grid>
+              </Grid>
             </Paper>
           </Grid>
         </Grid>
