@@ -22,7 +22,8 @@ import "./navbar.css";
 import { MouseEvent } from "react";
 import { themeToggleAtom } from "../../jotai-store/atoms/navbarAtom";
 import useLocalStorage from "use-local-storage";
-import { userAuthAtom } from "../../jotai-store/atoms/authAtom";
+import { userAuthAtom, userCreationAtom } from "../../jotai-store/atoms/authAtom";
+import Swal from "sweetalert2";
 const pages: { label: string; path: string; authRequired: boolean }[] = [
   { label: "Home", path: "/", authRequired: false },
   { label: "About Us", path: "/aboutus", authRequired: false },
@@ -33,7 +34,7 @@ const settingsAuth: { label: string; path: string;}[] = [
   { label: "Profile", path: "/profile" },
   { label: "Account", path: "/account" },
   { label: "Dashboard", path: "/" },
-  { label: "Logout", path: "/" },
+  { label: "Logout", path: "/signin" },
 ];
 // const settingsNoAuth = ["Signup", "Signin", "Features", "Contact us"];
 const settingsNoAuth: { label: string; path: string;}[] = [
@@ -46,6 +47,7 @@ const settingsNoAuth: { label: string; path: string;}[] = [
 const Navbar = () => {
   const [theme, setTheme] = useAtom(themeToggleAtom);
   const [isAuth, setIsAuth] = useAtom(userAuthAtom);
+  const [userInfo, setUserInfo] = useAtom(userCreationAtom);
   const [mode, setMode] = useLocalStorage("mode", false);
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -81,8 +83,24 @@ type handleSigninType = () => void;
 // Define the function types for React useEffect
 type useEffectType = (effect: React.EffectCallback, dependencies?: React.DependencyList) => void;
 
-const handleCloseUserMenu  = (path:string) => {
+const handleCloseUserMenu  = (path:string,label:string) => {
   navigate(path);
+  if(label == "Logout"){
+    Swal.fire({
+      icon: "info",
+      title: "Are You Sure!",
+      background: theme.isDark ? "#D8D9DA" : "#272829",
+      showConfirmButton:true,
+      showCancelButton:true,
+    }).then((resIfSucsess) => {
+      if (resIfSucsess.isConfirmed) {
+        setIsAuth({...isAuth,isAuthenticated:false})
+        navigate("/signin");
+      } else {
+        console.log("error");
+      }
+    });
+  }
   console.log(path);
   setAnchorElUser(null);
 };
@@ -270,7 +288,7 @@ useEffect(() => {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
                   sx={{ backgroundColor: "#333A73" }}
-                  src="/broken-image.jpg"
+                  src= {isAuth.isAuthenticated ? userInfo.profilePicture : "/broken-image.jpg"}
                 />
               </IconButton>
             </Tooltip>
@@ -292,12 +310,12 @@ useEffect(() => {
             >
               {isAuth.isAuthenticated
                 ? settingsAuth.map((setting) => (
-                    <MenuItem key={setting.label} onClick={()=>handleCloseUserMenu(setting.path)}>
+                    <MenuItem key={setting.label} onClick={()=>handleCloseUserMenu(setting.path,setting.label)}>
                       <Typography textAlign="center">{setting.label}</Typography>
                     </MenuItem>
                   ))
                 : settingsNoAuth.map((setting) => (
-                  <MenuItem key={setting.label} onClick={()=>handleCloseUserMenu(setting.path)}>
+                  <MenuItem key={setting.label} onClick={()=>handleCloseUserMenu(setting.path,setting.label)}>
                   <Typography textAlign="center">{setting.label}</Typography>
                     </MenuItem>
                   ))}

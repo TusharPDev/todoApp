@@ -11,16 +11,19 @@ import Swal from "sweetalert2";
 import { themeToggleAtom } from "../../../jotai-store/atoms/navbarAtom";
 import { useAtom } from "jotai";
 import unknownUser from "../../../assets/images/profile/unknownUser.png";
+import { userCreationAtom } from "../../../jotai-store/atoms/authAtom";
 interface AvatarProps {
   images: string[];
 }
 
 const AvatarProfile: React.FC<AvatarProps> = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useAtom(userCreationAtom);
   const [theme, setTheme] = useAtom(themeToggleAtom);
 
   const handleImageClick = (image: string) => {
     setSelectedImage(image);
+    console.log("image",image)
   };
   const handleConfirm = () => {
     if (selectedImage !== null) {
@@ -32,6 +35,7 @@ const AvatarProfile: React.FC<AvatarProps> = ({ images }) => {
         heightAuto: false,
         background: theme.isDark ? "#D8D9DA" : "#272829",
       });
+      setUserInfo({...userInfo,profilePicture:selectedImage})
     } else {
       Swal.fire({
         icon: "info",

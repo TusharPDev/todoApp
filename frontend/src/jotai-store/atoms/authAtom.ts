@@ -3,14 +3,16 @@ import { atom } from "jotai";
 type CreateUserAtom = {
     email:string,
     username: string,
-    password: string
+    password: string,
+    profilePicture: string
   };
   
   // Define the initial state of your atom
   const CreateUserState: CreateUserAtom = {
     email: "",
     username: "",
-    password: ""
+    password: "",
+    profilePicture: "",
   };
   
   // Create the atom

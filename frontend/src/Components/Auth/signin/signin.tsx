@@ -23,6 +23,7 @@ import { makeStyles } from "@mui/styles";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { userAuthAtom, userCreationAtom } from "../../../jotai-store/atoms/authAtom";
 function Copyright(props: any) {
   return (
     <Typography
@@ -65,6 +66,8 @@ const SignIn = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [theme, setTheme] = useAtom(themeToggleAtom);
+  const [userInfo, setUserInfo] = useAtom(userCreationAtom);
+  const [isAuth, setIsAuth] = useAtom(userAuthAtom);
   const [isVisible,setIsvisible] = React.useState(false)
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -90,7 +93,7 @@ const SignIn = () => {
           }
         );
         console.log(response);
-        console.log("User signed up:", response.data.user);
+        console.log("User signed up:", response);
         if (response.status == 200) {
           Swal.fire({
             icon: "success",
@@ -99,6 +102,8 @@ const SignIn = () => {
             background: theme.isDark ? "#D8D9DA" : "#272829",
           }).then((resIfSucsess)=>{
             if(resIfSucsess.isConfirmed){
+              setIsAuth({...isAuth,isAuthenticated:true})
+              setUserInfo({...userInfo,profilePicture:response.data.others.profilePicture})
               navigate("/")
             }else{
               console.log("error")

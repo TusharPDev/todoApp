@@ -35,6 +35,7 @@ import avatar8 from "../../../assets/images/profile/man.png";
 import avatar9 from "../../../assets/images/profile/woman.png";
 import avatar10 from "../../../assets/images/profile/woman (1).png";
 import avatar11 from "../../../assets/images/profile/woman (2).png";
+import { userCreationAtom } from "../../../jotai-store/atoms/authAtom";
 function Copyright(props: any) {
   return (
     <Typography
@@ -77,6 +78,7 @@ const SignUp = () => {
   const classes = useStyles();
 
   const [theme, setTheme] = useAtom(themeToggleAtom);
+  const [userInfo, setUserInfo] = useAtom(userCreationAtom);
   const [isVisible, setIsvisible] = React.useState(false);
   const navigate = useNavigate();
 
@@ -92,6 +94,11 @@ const SignUp = () => {
     avatar9,
     avatar10,
   ];
+
+  // React.useEffect(() => {
+  //   console.log("Path from sign up page", userInfo.profilePicture);
+  // }, [userInfo]);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -99,9 +106,9 @@ const SignUp = () => {
       email: data.get("email"),
       password: data.get("password"),
     });
-    const userName = data.get("userName");
-    const email = data.get("email");
-    const passWord = data.get("password");
+    const userName: any = data.get("userName");
+    const email: any = data.get("email");
+    const passWord: any = data.get("password");
     console.log({
       userName,
       email,
@@ -124,8 +131,10 @@ const SignUp = () => {
             email: email,
             username: userName,
             password: passWord,
+            profilePicture: userInfo.profilePicture,
           }
         );
+        const userProfilePic = userInfo.profilePicture;
         console.log(response);
         console.log("User signed up:", response.data.user);
         if (response.status == 200) {
@@ -136,12 +145,28 @@ const SignUp = () => {
             background: theme.isDark ? "#D8D9DA" : "#272829",
           }).then((resIfSucsess) => {
             if (resIfSucsess.isConfirmed) {
+              setUserInfo({
+                ...userInfo,
+                username: userName,
+                password: passWord,
+                profilePicture: userProfilePic,
+              });
               navigate("/signin");
-            } else {
+            }
+            else {
               console.log("error");
             }
           });
-        } else {
+        }else if(response.status == 400){
+          Swal.fire({
+            icon: "info",
+            title: "User Already registerd!",
+            text: "please try with different details",
+            background: theme.isDark ? "#D8D9DA" : "#272829",
+          })
+        } 
+        
+        else {
           Swal.fire({
             icon: "error",
             title: "Error",
@@ -150,6 +175,12 @@ const SignUp = () => {
         }
       }
     } catch (error) {
+      // Swal.fire({
+      //   icon: "info",
+      //   title: "User Already registerd!",
+      //   text: "please try with different details",
+      //   background: theme.isDark ? "#D8D9DA" : "#272829",
+      // })
       console.error(error);
     }
   };
@@ -383,7 +414,8 @@ const SignUp = () => {
                 <Grid item sx={{ width: "700px" }}>
                   <Box className="profole-box">
                     <Grid>
-                      <h4 style={{ textAlign: "center", marginBottom: "10px" }}>
+                      <h4 style={{ textAlign: "center", marginBottom: "10px",color: theme.isDark ? "#3D3B40" : "#C7C8CC",
+                        fontFamily: "monospace", }}>
                         Select Your Avatar
                       </h4>
                       <AvatarProfile images={AvatarCollection} />
